@@ -5,34 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CatDogCore.Models;
+using CatDogCore.Services;
 
 namespace CatDogCore.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            ViewData["Images"] = new string[] {
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute",
-                "https://cataas.com/cat/cute"
-            };
+        private readonly IBlobstorageService _blobStorageService;
 
+        public HomeController(IBlobstorageService blobStorageService)
+        {
+            _blobStorageService = blobStorageService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+
+            var paths = await _blobStorageService.GetFiles("uploads");
+            ViewData["Images"] = paths.ToArray();
             return View();
         }
 
