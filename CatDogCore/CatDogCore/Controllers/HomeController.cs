@@ -12,25 +12,27 @@ namespace CatDogCore.Controllers
     {
         public IActionResult Index()
         {
-            return View();
-        }
+            ViewData["Images"] = new string[] {
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute",
+                "https://cataas.com/cat/cute"
+            };
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
             return View();
         }
 
