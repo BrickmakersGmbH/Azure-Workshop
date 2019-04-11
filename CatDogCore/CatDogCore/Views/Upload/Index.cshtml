@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Upload";
+    var images = ViewData["Images"] as string[];
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h1>Upload</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-1 col-md-offset-11">
+        <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Liste</a>
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data" asp-controller="Upload" asp-action="Index">
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>Upload one or more files using this form:</p>
+            <input type="file" name="files" multiple />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Upload" />
+        </div>
+    </div>
+</form>

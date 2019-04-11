@@ -3,7 +3,18 @@
     var images = ViewData["Images"] as string[];
 }
 
-<h1>CatDog-Core</h1>
+<div class="row">
+    <div class="col-md-4">
+        <h1>CatDog-Core</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-1 col-md-offset-11">
+        <a class="btn btn-primary" asp-area="" asp-controller="Upload" asp-action="Index">Upload</a>
+    </div>
+</div>
+
 <div class="row">
     <div class="container">
         <div class="row">
