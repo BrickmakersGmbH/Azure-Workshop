@@ -18,7 +18,8 @@ namespace CatDogCore.Services
 
     public class BlobstorageService : IBlobstorageService
     {
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
+        private static string BlobStorageConnectionName => "ConnectionStrings:BlobStorage";
 
         public BlobstorageService(IConfiguration config)
         {
@@ -41,7 +42,7 @@ namespace CatDogCore.Services
 
         private async Task<CloudBlobContainer> GetCloudBlobContainer(string containerName)
         {
-            var connectionString = _config.GetValue<string>("ConnectionStrings:BlobStorage");
+            var connectionString = _config.GetValue<string>(BlobStorageConnectionName);
             var storageAccount = CloudStorageAccount.Parse(connectionString);
             var blobClient = storageAccount.CreateCloudBlobClient();
             var container = blobClient.GetContainerReference(containerName);
@@ -55,6 +56,7 @@ namespace CatDogCore.Services
             }
             return container;
         }
+
         private static async Task<List<CloudBlockBlob>> GetAllCloudBlockBlobsForContainer(CloudBlobContainer container)
         {
             int? maxResultsPerQuery = null;
