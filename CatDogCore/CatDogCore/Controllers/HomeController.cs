@@ -19,6 +19,7 @@ namespace CatDogCore.Controllers
         {
             var paths = await _blobStorageService.GetFiles("uploads");
             ViewData["Images"] = paths.ToArray();
+            ViewData["Title"] = "Uploads";
             return View();
         }
 
@@ -26,6 +27,7 @@ namespace CatDogCore.Controllers
         {
             var paths = await _blobStorageService.GetFiles("cats");
             ViewData["Images"] = paths.ToArray();
+            ViewData["Title"] = "Cats";
             return View("Index");
         }
 
@@ -33,6 +35,7 @@ namespace CatDogCore.Controllers
         {
             var paths = await _blobStorageService.GetFiles("dogs");
             ViewData["Images"] = paths.ToArray();
+            ViewData["Title"] = "Dogs";
             return View("Index");
         }
 
@@ -40,6 +43,7 @@ namespace CatDogCore.Controllers
         {
             var paths = await _blobStorageService.GetFiles("other");
             ViewData["Images"] = paths.ToArray();
+            ViewData["Title"] = "Other";
             return View("Index");
         }
 
