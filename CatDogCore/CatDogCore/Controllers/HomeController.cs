@@ -17,10 +17,30 @@ namespace CatDogCore.Controllers
 
         public async Task<IActionResult> Index()
         {
-
             var paths = await _blobStorageService.GetFiles("uploads");
             ViewData["Images"] = paths.ToArray();
             return View();
+        }
+
+        public async Task<IActionResult> Cats()
+        {
+            var paths = await _blobStorageService.GetFiles("cats");
+            ViewData["Images"] = paths.ToArray();
+            return View("Index");
+        }
+
+        public async Task<IActionResult> Dogs()
+        {
+            var paths = await _blobStorageService.GetFiles("dogs");
+            ViewData["Images"] = paths.ToArray();
+            return View("Index");
+        }
+
+        public async Task<IActionResult> Other()
+        {
+            var paths = await _blobStorageService.GetFiles("other");
+            ViewData["Images"] = paths.ToArray();
+            return View("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

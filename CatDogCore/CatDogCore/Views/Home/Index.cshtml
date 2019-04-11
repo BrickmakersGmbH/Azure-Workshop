@@ -16,6 +16,14 @@
 </div>
 
 <div class="row">
+    <div class="col-md-4">
+        <a class="btn btn-link" asp-area="" asp-controller="Home" asp-action="Cats">Cats</a>
+        <a class="btn btn-link" asp-area="" asp-controller="Home" asp-action="Dogs">Dogs</a>
+        <a class="btn btn-link" asp-area="" asp-controller="Home" asp-action="Other">Other</a>
+    </div>
+</div>
+
+<div class="row">
     <div class="container">
         <div class="row">
             @foreach (var item in images)
