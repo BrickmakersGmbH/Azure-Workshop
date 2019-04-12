@@ -1,0 +1,18 @@
+Über mich
+--- 
+- Hochschule Koblenz: 2013-2016
+- Bachelorarbeit (02.2017): [timeout](http://www.timeoutapp.de/de)
+- Technologien (Frontend, Backend, Apps)
+    - React Native
+    - Xamarin
+    - nativ mit Swift
+    - React
+    - .net Core & .net Web API
+    - node js
+- Weiterbildung
+    - Konferenzen
+    - Pers. Wünsche/Ideen
+    - Kurse, etc.
+- Hochschule: 
+    - Komplette WPF angedacht (evtl. nächstes Jahr? )
+    - Agile Entwicklung mit Scrum, Entwicklung v. WebApp im Team
