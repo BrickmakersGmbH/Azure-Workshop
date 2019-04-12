@@ -13,7 +13,13 @@
         "metadata": {
              "description": ""
          }
-     }
+     },
+     "securityGroupId": {
+      "type": "string",
+      "metadata": {
+           "description": ""
+       }
+    }
     },
     "variables": {},
     "resources": [
@@ -32,8 +38,8 @@
               "tenantId": "[parameters('tenantId')]",
               "accessPolicies": [
                   {
-                      "tenantId": "TENANT ID",
-                      "objectId": "OBJECT ID",
+                      "tenantId": "[parameters('tenantId')]",
+                      "objectId": "[parameters('securityGroupId')]",
                       "permissions": {
                          "keys": "Get",
                          "secrets": "List,Get,Set"

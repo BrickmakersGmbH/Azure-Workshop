@@ -7,6 +7,11 @@
         },
         "keyVaultName": {
             "value": "kva1"
+        },
+        "securityGroupId": {
+            "value": "a6341485-6095-4880-b871-d0d6cde3adb9"
         }
     }
 }
+
+
