@@ -11,3 +11,14 @@ body {
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.img-container {
+    width: 350px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
