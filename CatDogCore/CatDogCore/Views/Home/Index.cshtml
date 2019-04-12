@@ -10,6 +10,13 @@
     <h2>@ViewData["Title"]</h2>
 </div>
 <div class="container">
+    @if (!lists.Any())
+    {
+        <div class="row text-center">
+            <h3>Keine Bilder Verfügbar</h3>
+        </div>
+    }
+
     @foreach (var list in lists)
     {
         <div class="row mb-20">
