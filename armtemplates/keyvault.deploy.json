@@ -50,19 +50,7 @@
                   "name": "standard",
                   "family": "A"
               }
-          },
-          "resources": [
-            {
-              "type": "secrets",
-              "name": "KeyvaultSecret1",
-              "apiVersion": "2018-02-14",
-              "properties": {
-                 "value": "KeyvaultSecretValue1"
-               },
-              "dependsOn": [
-                 "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
-               ]
-            }]
+          }
       }
     ],
     "outputs": {}
