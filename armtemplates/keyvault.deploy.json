@@ -1,0 +1,63 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "tenantId": {
+         "type": "string",
+         "metadata": {
+              "description": ""
+          }
+      },
+      "keyVaultName": {
+        "type": "string",
+        "metadata": {
+             "description": ""
+         }
+     }
+    },
+    "variables": {},
+    "resources": [
+      {
+         "type": "Microsoft.KeyVault/vaults",
+         "apiVersion": "2018-02-14",
+         "name": "[parameters('keyVaultName')]",
+         "location": "[resourceGroup().location]",
+         "tags": {
+              "displayName": "[parameters('keyVaultName')]"
+         },
+         "properties": {
+              "enabledForDeployment": true,
+              "enabledForTemplateDeployment": true,
+              "enabledForDiskEncryption": true,
+              "tenantId": "[parameters('tenantId')]",
+              "accessPolicies": [
+                  {
+                      "tenantId": "TENANT ID",
+                      "objectId": "OBJECT ID",
+                      "permissions": {
+                         "keys": "Get",
+                         "secrets": "List,Get,Set"
+                     }
+                  }
+              ],
+              "sku": {
+                  "name": "standard",
+                  "family": "A"
+              }
+          },
+          "resources": [
+            {
+              "type": "secrets",
+              "name": "KeyvaultSecret1",
+              "apiVersion": "2018-02-14",
+              "properties": {
+                 "value": "KeyvaultSecretValue1"
+               },
+              "dependsOn": [
+                 "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
+               ]
+            }]
+      }
+    ],
+    "outputs": {}
+}

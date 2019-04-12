@@ -1,0 +1,12 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "tenantId": {
+            "value": "f71509df-a0fa-4788-bdd3-3974e6e8c0da"
+        },
+        "keyVaultName": {
+            "value": "kva1"
+        }
+    }
+}
