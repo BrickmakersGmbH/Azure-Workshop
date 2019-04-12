@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "tenantId": {
-            "value": "f71509df-a0fa-4788-bdd3-3974e6e8c0da"
+            "value": "YourTenantId"
         },
         "keyVaultName": {
-            "value": "azkokva1"
+            "value": "YourKeyVaultName"
         },
         "securityGroupId": {
-            "value": "a6341485-6095-4880-b871-d0d6cde3adb9"
+            "value": "YourSecurityGroupId"
         }
     }
 }

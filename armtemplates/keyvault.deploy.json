@@ -2,13 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "tenantId": {
+      "keyVaultName": {
          "type": "string",
          "metadata": {
               "description": ""
           }
       },
-      "keyVaultName": {
+      "tenantId": {
         "type": "string",
         "metadata": {
              "description": ""
@@ -19,7 +19,7 @@
       "metadata": {
            "description": ""
        }
-    }
+     }         
     },
     "variables": {},
     "resources": [
