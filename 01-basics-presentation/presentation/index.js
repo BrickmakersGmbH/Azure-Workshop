@@ -23,9 +23,7 @@ import background from '../assets/brickmakers-hero-background.png'
 
 // Chapter 1 Slide Markdown Files
 import aboutBrickmakers from "./aboutBrickmakers.md"
-import aboutBrickmakersNotes from "./aboutBrickmakers.notes.md"
 import aboutMe from "./aboutMe.md"
-import aboutMeNotes from "./aboutMe.notes.md"
 import aboutAzure from "./aboutAzure.md"
 import aboutAzureNotes from "./aboutAzure.notes.md"
 
@@ -34,11 +32,8 @@ import bmKunde1 from "../assets/01_bm_kunden_cornelsen.svg"
 import bmKunde2 from "../assets/01_bm_kunden_allianz.svg"
 import bmKunde3 from "../assets/01_bm_kunden_telefonica.svg"
 import bmKunde4 from "../assets/01_bm_kunden_strato.svg"
-import exercise1 from "./exercises/ex1.md"
 import exercise2 from "./exercises/ex2.md"
 import exercise2Solution from "./exercises/ex2-solution.md"
-import exercise3 from "./exercises/ex3.md"
-import exercise3Solution from "./exercises/ex3-solution.md"
 
 // Chapter 2 Slide Markdown Files
 import azureRessourceGroup from "./azure-services/ressourceGroup.md"
@@ -47,7 +42,6 @@ import def3 from "./def3-asp.md"
 import def4 from "./def3-asp-tipps.md"
 import def5 from "./def4-deployment.md"
 import def5zd from "./def4-deployment-zerodown.md"
-import def5env from "./def4-deployment-env.md"
 import deploymentEnvImage from "../assets/02_deployment_stages.png"
 
 import azureDbSql from "./azure-services/database-sql.md"
@@ -67,22 +61,13 @@ import workshopMd from './workshop.md'
 // Chapter 4 Slide Markdowns
 import azureSearch from "./azure-services/search.md"
 import azureAI from "./azure-services/artificialIntelligence.md"
-import azureAuth from "./azure-services/authentifizierung.md"
-import azureContainer from "./azure-services/azureContainer.md"
 import azureFunctions from "./azure-services/azureFunctions.md"
 import azureChatBots from "./azure-services/chatBots.md"
 import azureIoT from "./azure-services/IoTHub.md"
-
-import azureAuthLogo from '../assets/04_activedirectory.jpg'
 import azureSearchLogo from '../assets/04_search.jpg'
 import azureFunctionsLogo from '../assets/04_functions.jpg'
-import azureContainerLogo from '../assets/04_container.jpg'
 import azureChatBotsLogo from '../assets/04_bots.png'
-
-import teamIdeaLogo from '../assets/team-idea.png'
-import workshopWelcomeImage from '../assets/03_workshop_welcome.png'
 import workshopArchitectureImage from '../assets/03_workshop_Architecture.png'
-import workshopAppImage from '../assets/03_workshop_app.png'
 
 
 // Require CSS
@@ -99,22 +84,30 @@ const theme = createTheme({
   });
 
 
+  const Constants = {
+    Start: {
+      Title: "Azure Grundlagen",
+      SubTitle: "DNUG Koblenz: Einen Tag in der Cloud"
+    }
+
+}
+
+
 // TODO: Add modules for slides:
 // https://hackernoon.com/presentations-with-spectacle-how-i-modularize-my-deck-775c082cef08
 export default class Presentation extends React.Component {
   render() {
 
+    let introductionMd = [
+      { md: [workshopMd], title: "Überblick", index: "1.1" }
+    ]
 
     let azureServicesBasicMd = [
-
-      { md: [workshopMd], title: "Überblick", index: "2.1" },
-      { pause: true },
-
+      { md: [], title: "Überblick", index: "2.1" },
       { md: [def2], title: "Web App", logo: appServiceLogo, index: "2.2" },
       { md: [def3, def4], title: "App Service Plan", logo: appServicePlanLogo, index: "2.3" },
       { md: [azureRessourceGroup], title: "Ressource Group", logo: azureRessourceGroupLogo, index: "2.4" },
       { md: [exercise2, exercise2Solution], title: "Übung 2", notes: exercise2Solution },
-      { workshop: true },
 
       {
         md: [
@@ -127,23 +120,19 @@ export default class Presentation extends React.Component {
         md: [
           azureDbCosmos
         ], title: "Datenbanken: Cosmos DB",
-        logo: "https://azure.microsoft.com/svghandler/cosmos-db?width=120",
+        logo: "https://docs.microsoft.com/de-de/azure/cosmos-db/media/index/azure-cosmos-db-icon.png",
         index: "2.6"
       },
       { md: [azureBlob], title: "Blob Storage", logo: blobStorageLogo, index: "2.7" },
-      { workshop: true },
       {
         md: [
           def5,
-          def5env,
           def5zd
         ],
         logo: deploymentEnvImage,
         title: "Deployment",
         index: "2.8"
       },
-      { md: [exercise3, exercise3Solution], title: "Übung 3", notes: exercise3Solution },
-      { pause: true },
     ];
 
     let azureServicesExtendedMd = [
@@ -159,50 +148,54 @@ export default class Presentation extends React.Component {
       {
         md: [azureFunctions,], title: "Azure Functions", logo: azureFunctionsLogo
       },
-      {
-        md: [azureAI,], title: "Artificial Intelligence"
-      },
+  
       {
         md: [azureChatBots], title: "Azure Bot Service", logo: azureChatBotsLogo, images: [require("../assets/05_timeout.png")]
       },
       {
         md: [azureIoT,], title: "Internet of Things - IoT Suite", images: [
-          require("../assets/05_iot1.png"),
-          require("../assets/05_iot2.png"),
-          require("../assets/05_iot3a.png"),
           require("../assets/05_iot3b.png")
         ]
       },
-      // {
-      //   md: [azureAuth], logo: azureAuthLogo
-      // }, 
-      // {
-      //   md : [azureContainer], logo: azureContainerLogo
-      // }
+      {
+        md: [azureAI,], title: "Cognitive Services"
+      },
     ]
 
     const chapters = [
       {
         title: "Einführung", subslides: [
-          { title: "BRICKMAKERS GmbH" },
           { title: "Über mich" },
+          { title: "BRICKMAKERS GmbH" },
           { title: "Was ist Azure?" },
-          { title: "Übung 1" }
         ]
       },
-      { title: "Azure Workshop", subslides: [] },
+      { title: "Azure Basics", subslides: [] },
       { title: "Azure Services - Ausblick", subslides: [] },
     ]
 
 
+
     return (
       <Deck transition={["slide", "fade"]} transitionDuration={500} theme={theme} progress="number">
+{/* TODO: ADD MORE INTRO SLIDES FOR GENERAL OVERVIEW OF THE DAY !!! */}
+    <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"} >
+                <Heading size={5} caps lineHeight={1} textColor="secondary">
+                  1. {chapters[0].title}
+                </Heading>
+                <Heading margin="10" size={6} lineHeight={1} textColor="tertiary">
+                  {introductionMd[0].index} {introductionMd[0].title}
+                </Heading>
+            
+                <Markdown margin="20" textColor="tertiary" source={introductionMd[0].md[0]} style={{ "text-align": "left" }} />
+              </Slide>
+
         <Slide bgColor="primary" bgImage={background} >
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Cloud Computing: Azure
+              {Constants.Start.Title}
             </Heading>
           <Text margin="10px 0 0" textColor="tertiary" size={3} fit bold>
-            Hochschule Koblenz - BRICKMAKERS GmbH
+            {Constants.Start.SubTitle}
           </Text>
         </Slide>
         <Slide bgColor="primary">
@@ -220,7 +213,7 @@ export default class Presentation extends React.Component {
         {/* Kapitel 1: Einführung */}
         <Slide bgColor="primary" bgImage={background} >
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Cloud Computing: Azure
+            {Constants.Start.Title}
             </Heading>
           <Text margin="10px 0 0" textColor="tertiary" size={3} fit bold>
             Kapitel 1: {chapters[0].title}
@@ -234,16 +227,26 @@ export default class Presentation extends React.Component {
             {chapters[0].subslides.map(section => <ListItem>{section.title}</ListItem>)}
           </List>
         </Slide>
+    
+   
 
-        <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"} >
-          <Notes>
-            <Markdown source={aboutBrickmakersNotes} />
-          </Notes>
-          <Heading size={5} caps lineHeight={1} textColor="secondary">
+
+        <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"}>
+          <Heading size={6} caps lineHeight={1} textColor="secondary">
             Kapitel 1: {chapters[0].title}
           </Heading>
           <Heading size={6} caps lineHeight={1} textColor="tertiary">
             1.1 {chapters[0].subslides[0].title}
+          </Heading>
+          <Markdown source={aboutMe} fit textColor="tertiary" style={{ "text-align": "left" }} />
+        </Slide>
+
+        <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"} >
+          <Heading size={5} caps lineHeight={1} textColor="secondary">
+            Kapitel 1: {chapters[0].title}
+          </Heading>
+          <Heading size={6} caps lineHeight={1} textColor="tertiary">
+            1.2 {chapters[0].subslides[1].title}
           </Heading>
           <Markdown textColor="tertiary" source={aboutBrickmakers} style={{ "text-align": "left" }} />
 
@@ -256,44 +259,7 @@ export default class Presentation extends React.Component {
           </Appear>
         </Slide>
 
-        <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"} >
-          <Notes>
-            <Markdown source={aboutBrickmakersNotes} />
-          </Notes>
-          <Heading size={5} caps lineHeight={1} textColor="secondary">
-            Kapitel 1: {chapters[0].title}
-          </Heading>
-          <Heading size={6} caps lineHeight={1} textColor="tertiary">
-            1.1 {chapters[0].subslides[0].title}
-          </Heading>
-          <Image src={teamIdeaLogo} />
-          <Text> Kommt gerne auf einen Kaffee vorbei </Text>
-          <Text margin="50"> oder besucht uns bei einem Meetup! </Text>
-          <div >
-            <MyMapComponent
-              isMarkerShown
-              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyCQfDQM3GUeTbsPhWAYCo40kdNWsB3m2mI"
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
-            />
-          </div>
-        </Slide>
-
-
-        <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"}>
-          <Notes>
-            <Markdown source={aboutMeNotes} />
-          </Notes>
-          <Heading size={6} caps lineHeight={1} textColor="secondary">
-            Kapitel 1: {chapters[0].title}
-          </Heading>
-          <Heading size={6} caps lineHeight={1} textColor="tertiary">
-            1.2 {chapters[0].subslides[1].title}
-          </Heading>
-          <Markdown source={aboutMe} fit textColor="tertiary" style={{ "text-align": "left" }} />
-        </Slide>
-
+       
         <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"} >
           <Notes>
             <Markdown source={aboutAzureNotes} />
@@ -307,21 +273,14 @@ export default class Presentation extends React.Component {
           <Markdown fit textColor="tertiary" source={aboutAzure} style={{ "text-align": "left" }} />
         </Slide>
 
-        <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"} >
-          <Heading size={6} caps lineHeight={1} textColor="secondary">
-            Kapitel 1: {chapters[0].title}
-          </Heading>
-          <Heading size={6} caps lineHeight={1} textColor="tertiary">
-            1.4 {chapters[0].subslides[3].title}
-          </Heading>
-          <Markdown source={exercise1} fit textColor="tertiary" style={{ "text-align": "left" }} />
+     
+     
 
-        </Slide>
 
         {/* Kapitel 2: Überblick in Azure */}
         <Slide bgColor="primary" bgImage={background} >
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Cloud Computing: Azure
+            {Constants.Start.Title}
             </Heading>
           <Text margin="10px 0 0" textColor="tertiary" size={3} fit bold>
             Kapitel 2: {chapters[1].title}
@@ -350,33 +309,9 @@ export default class Presentation extends React.Component {
 
           <Image src={workshopArchitectureImage} fit />
         </Slide>
-        {azureServicesBasicMd.map((definition, outIndex) => {
-
-          if (definition.pause) {
-            return (
-              <Slide bgColor="primary" >
-                <Heading size={6} caps lineHeight={1} textColor="secondary">
-                  Pause
-                </Heading>
-
-              </Slide>
-            )
-          }
-          if (definition.workshop) {
-            return (
-              <Slide bgColor="tertiary" >
-                <Heading size={6} caps lineHeight={1} textColor="secondary">
-                  Kapitel 2: {chapters[1].title}
-                </Heading>
-                <Text margin="10px 0 0" textColor="primary" size={3} fit bold>
-                  Hands-On
-            </Text>
-              </Slide>
-            )
-          }
-          else return definition.md.map((subslide, index) => {
-
-            return (
+        {azureServicesBasicMd.map((definition, outIndex) => 
+  
+           definition.md.map((subslide, index) => (
               <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"} >
                 {definition.notes && <Notes>
                   <Markdown source={definition.notes} />
@@ -396,13 +331,13 @@ export default class Presentation extends React.Component {
                 <Markdown margin="20" textColor="tertiary" source={subslide} style={{ "text-align": "left" }} />
               </Slide>
             )
-          })
-        })}
+          )
+        )}
 
         {/* Kapitel 3: Azure Services - Ausblick */}
         <Slide bgColor="primary" bgImage={background} >
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Cloud Computing: Azure
+            {Constants.Start.Title}
             </Heading>
           <Text margin="10px 0 0" textColor="tertiary" size={3} fit bold>
             Kapitel 3: {chapters[2].title}
