@@ -1,5 +1,5 @@
 ﻿@{
-    var images = ViewData["Images"] as string[];
+    var lists = ViewData["Images"] as IEnumerable<IEnumerable<string>>;
 }
 <div class="page-header">
     <div class="btn-toolbar pull-right">
@@ -9,14 +9,18 @@
     </div>
     <h2>@ViewData["Title"]</h2>
 </div>
-
 <div class="container">
-    <div class="row">
-    @foreach (var item in images)
+    @foreach (var list in lists)
     {
-        <div class="col-md-4">
-            <img src='@item' width=350/>
+        <div class="row mb-20">
+            @foreach (var item in list)
+            {
+                <div class="col-md-4">
+                    <div class="img-container">
+                        <img src="@item" class="img-responsive img-thumbnail center-block"/>
+                    </div>
+                </div>
+            }
         </div>
     }
-    </div>
 </div>

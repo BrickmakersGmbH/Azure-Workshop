@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using CatDogCore.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using CatDogCore.Models;
 using CatDogCore.Services;
@@ -18,7 +20,7 @@ namespace CatDogCore.Controllers
         public async Task<IActionResult> Index()
         {
             var paths = await _blobStorageService.GetFiles("uploads");
-            ViewData["Images"] = paths.ToArray();
+            ViewData["Images"] = paths.Partition(3);
             ViewData["Title"] = "Uploads";
             return View();
         }
@@ -26,7 +28,7 @@ namespace CatDogCore.Controllers
         public async Task<IActionResult> Cats()
         {
             var paths = await _blobStorageService.GetFiles("cats");
-            ViewData["Images"] = paths.ToArray();
+            ViewData["Images"] = paths.Partition(3);
             ViewData["Title"] = "Cats";
             return View("Index");
         }
@@ -34,7 +36,7 @@ namespace CatDogCore.Controllers
         public async Task<IActionResult> Dogs()
         {
             var paths = await _blobStorageService.GetFiles("dogs");
-            ViewData["Images"] = paths.ToArray();
+            ViewData["Images"] = paths.Partition(3);
             ViewData["Title"] = "Dogs";
             return View("Index");
         }
@@ -42,7 +44,7 @@ namespace CatDogCore.Controllers
         public async Task<IActionResult> Other()
         {
             var paths = await _blobStorageService.GetFiles("other");
-            ViewData["Images"] = paths.ToArray();
+            ViewData["Images"] = paths.Partition(3);
             ViewData["Title"] = "Other";
             return View("Index");
         }
