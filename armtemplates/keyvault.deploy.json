@@ -1,57 +1,85 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-      "keyVaultName": {
-         "type": "string",
-         "metadata": {
-              "description": ""
-          }
-      },
-      "tenantId": {
-        "type": "string",
-        "metadata": {
-             "description": ""
-         }
-     },
-     "securityGroupId": {
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "keyVaultName": {
+       "type": "string",
+       "metadata": {
+            "description": ""
+        }
+    },
+    "tenantId": {
       "type": "string",
+      "defaultValue": "[subscription().tenantId]",
       "metadata": {
            "description": ""
        }
-     }         
-    },
-    "variables": {},
-    "resources": [
-      {
-         "type": "Microsoft.KeyVault/vaults",
-         "apiVersion": "2018-02-14",
-         "name": "[parameters('keyVaultName')]",
-         "location": "[resourceGroup().location]",
-         "tags": {
-              "displayName": "[parameters('keyVaultName')]"
-         },
-         "properties": {
-              "enabledForDeployment": true,
-              "enabledForTemplateDeployment": true,
-              "enabledForDiskEncryption": true,
-              "tenantId": "[parameters('tenantId')]",
-              "accessPolicies": [
-                  {
-                      "tenantId": "[parameters('tenantId')]",
-                      "objectId": "[parameters('securityGroupId')]",
-                      "permissions": {
-                         "keys": "Get",
-                         "secrets": "List,Get,Set"
-                     }
-                  }
-              ],
-              "sku": {
-                  "name": "standard",
-                  "family": "A"
-              }
-          }
-      }
+   },
+   "securityGroupId": {
+    "type": "string",
+    "metadata": {
+         "description": ""
+     }
+   },
+   "keysPermissions": {
+    "type": "array",
+    "defaultValue": [
+      "list"
+    ]
+   },
+   "secretsPermissions": {
+    "type": "array",
+    "defaultValue": [
+      "List"
     ],
-    "outputs": {}
+    "metadata": {
+      "description": "Specifies the permissions to secrets in the vault. Valid values are: all, get, list, set, delete, backup, restore, recover, and purge."
+    }
+   } 
+  },
+  "variables": {},
+  "resources": [
+    {
+       "type": "Microsoft.KeyVault/vaults",
+       "apiVersion": "2018-02-14",
+       "name": "[parameters('keyVaultName')]",
+       "location": "[resourceGroup().location]",
+       "tags": {
+            "displayName": "[parameters('keyVaultName')]"
+       },
+       "properties": {
+            "enabledForDeployment": true,
+            "enabledForTemplateDeployment": true,
+            "enabledForDiskEncryption": true,
+            "tenantId": "[parameters('tenantId')]",
+            "accessPolicies": [
+                {
+                    "tenantId": "[parameters('tenantId')]",
+                    "objectId": "[parameters('securityGroupId')]",
+                    "permissions": {
+                       "keys": "[parameters('keysPermissions')]",
+                       "secrets": "[parameters('secretsPermissions')]"
+                   }
+                }
+            ],
+            "sku": {
+                "name": "standard",
+                "family": "A"
+            }
+        },
+        "resources": [
+          {
+            "type": "secrets",
+            "name": "KeyvaultSecret1",
+            "apiVersion": "2018-02-14",
+            "properties": {
+               "value": "KeyvaultSecretValue1"
+             },
+            "dependsOn": [
+               "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
+             ]
+          }]
+    }
+  ],
+  "outputs": {}
 }

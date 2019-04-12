@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "appName": {
-        "value": "koazwork"
+        "value": "YourAppName"
       },
       "location": {
-        "value": "West Europe"
+        "value": "YourLocation"
       }
     }
   }
