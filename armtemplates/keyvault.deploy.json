@@ -29,7 +29,7 @@
    },
    "secretName": {
     "type": "string",
-    "defaultValue": ""
+    "defaultValue": "TopSecret"
    },
    "secretsPermissions": {
     "type": "array",
