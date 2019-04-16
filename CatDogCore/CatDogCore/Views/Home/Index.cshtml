@@ -1,0 +1,33 @@
+﻿@{
+    var lists = ViewData["Images"] as IEnumerable<IEnumerable<string>>;
+}
+<div class="page-header">
+    <div class="btn-toolbar pull-right">
+        <div class="btn-group">
+            <a class="btn btn-primary" asp-area="" asp-controller="Upload" asp-action="Index">Upload</a>
+        </div>
+    </div>
+    <h2>@ViewData["Title"]</h2>
+</div>
+<div class="container">
+    @if (!lists.Any())
+    {
+        <div class="row text-center">
+            <h3>Keine Bilder Verfügbar</h3>
+        </div>
+    }
+
+    @foreach (var list in lists)
+    {
+        <div class="row mb-20">
+            @foreach (var item in list)
+            {
+                <div class="col-md-4">
+                    <div class="img-container">
+                        <img src="@item" class="img-responsive img-thumbnail center-block"/>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
