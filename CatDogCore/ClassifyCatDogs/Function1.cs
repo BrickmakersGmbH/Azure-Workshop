@@ -1,16 +1,30 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace ClassifyCatDogs
 {
     public static class Function1
     {
+        private const string CategoryCat = "animal_cat";
+        private const string CategoryDog = "animal_dog";
+        private const string TagCat = "cat";
+        private const string TagDog = "dog";
+        private const string ContainerCats = "cats";
+        private const string ContainerDogs = "dogs";
+        private const string ContainerOther = "other";
+        private const string CSApiKeyKey = "Values:CS_ApiKey";
+        private static string _connectionstring = "";
+
         [FunctionName("ClassifyCatDogs")]
         public static void Run([BlobTrigger("uploads/{name}", Connection = "ConnectionStrings:BlobStorage")]Stream myBlob, string name, ILogger log, ExecutionContext context)
         {
@@ -22,7 +36,8 @@ namespace ClassifyCatDogs
                 .AddEnvironmentVariables()
                 .Build();
 
-            var subscriptionKey = config.GetValue<string>("Values:CS_ApiKey");
+            var subscriptionKey = config.GetValue<string>(CSApiKeyKey);
+            _connectionstring = config.GetConnectionString("BlobStorage");
             var computerVision = new ComputerVisionClient(
                 new ApiKeyServiceClientCredentials(subscriptionKey),
                 new System.Net.Http.DelegatingHandler[] { })
@@ -30,47 +45,85 @@ namespace ClassifyCatDogs
                 Endpoint = "https://westeurope.api.cognitive.microsoft.com"
             };
 
-            var analysis = computerVision.AnalyzeImageInStreamAsync(myBlob, new List<VisualFeatureTypes> { VisualFeatureTypes.Categories, VisualFeatureTypes.Tags }).Result;
-            if (analysis.Categories != null)
+            using (var stream = new MemoryStream())
             {
-                foreach (var analysisCategory in analysis.Categories.OrderByDescending(c => c.Score))
-                {
-                    if (analysisCategory.Name == "animal_cat")
-                    {
-                        MoveBlobToContainer(myBlob, "cats", log);
-                        return;
-                    }
+                myBlob.CopyTo(stream);
+                if (stream.CanSeek)
+                    stream.Seek(0, SeekOrigin.Begin);
+                if (myBlob.CanSeek)
+                    myBlob.Seek(0, SeekOrigin.Begin);
 
-                    if (analysisCategory.Name == "animal_dog")
+
+
+                var analysis = computerVision.AnalyzeImageInStreamAsync(stream,
+                    new List<VisualFeatureTypes> {VisualFeatureTypes.Categories, VisualFeatureTypes.Tags}).Result;
+                if (analysis.Categories != null)
+                {
+                    foreach (var analysisCategory in analysis.Categories.OrderByDescending(c => c.Score))
                     {
-                        MoveBlobToContainer(myBlob, "dogs", log);
-                        return;
+                        switch (analysisCategory.Name)
+                        {
+                            case CategoryCat:
+                                MoveBlobToContainer(myBlob, ContainerCats, name, log);
+                                return;
+                            case CategoryDog:
+                                MoveBlobToContainer(myBlob, ContainerDogs, name, log);
+                                return;
+                        }
                     }
                 }
-            }
-            if (analysis.Tags != null)
-            {
-                foreach (var analysisCategory in analysis.Tags.OrderByDescending(c => c.Confidence))
-                {
-                    if (analysisCategory.Name == "cat")
-                    {
-                        MoveBlobToContainer(myBlob, "cats", log);
-                        return;
-                    }
 
-                    if (analysisCategory.Name == "dog")
+                if (analysis.Tags != null)
+                {
+                    foreach (var analysisCategory in analysis.Tags.OrderByDescending(c => c.Confidence))
                     {
-                        MoveBlobToContainer(myBlob, "dogs", log);
-                        return;
+                        switch (analysisCategory.Name)
+                        {
+                            case TagCat:
+                                MoveBlobToContainer(myBlob, ContainerCats, name, log);
+                                return;
+                            case TagDog:
+                                MoveBlobToContainer(myBlob, ContainerDogs, name, log);
+                                return;
+                        }
                     }
                 }
+
+                MoveBlobToContainer(myBlob, ContainerOther, name, log);
             }
-            MoveBlobToContainer(myBlob, "other", log);
         }
 
-        private static void MoveBlobToContainer(Stream blob, string containerName, ILogger log)
+        private static void MoveBlobToContainer(Stream blob, string containerName, string filename, ILogger log)
         {
             log.LogInformation($"blob moved to {containerName}");
+            MoveFile("uploads", filename, containerName, blob).Wait();
+        }
+
+        public static async Task MoveFile(string oldContainerName, string fileName, string newContainerName, Stream stream)
+        {
+            var newContainer = await GetCloudBlobContainer(newContainerName);
+            var newCloudBlockBlob = newContainer.GetBlockBlobReference(Guid.NewGuid().ToString());
+            await newCloudBlockBlob.UploadFromStreamAsync(stream);
+            
+            var oldContainer = await GetCloudBlobContainer(oldContainerName);
+            var oldCloudBlockBlob = oldContainer.GetBlockBlobReference(fileName);
+            await oldCloudBlockBlob.DeleteIfExistsAsync();
+        } 
+
+        private static async Task<CloudBlobContainer> GetCloudBlobContainer(string containerName)
+        {
+            var storageAccount = CloudStorageAccount.Parse(_connectionstring);
+            var blobClient = storageAccount.CreateCloudBlobClient();
+            var container = blobClient.GetContainerReference(containerName);
+            if (!await container.ExistsAsync())
+            {
+                await container.CreateIfNotExistsAsync();
+                await container.SetPermissionsAsync(new BlobContainerPermissions
+                {
+                    PublicAccess = BlobContainerPublicAccessType.Blob
+                });
+            }
+            return container;
         }
     }
 }
