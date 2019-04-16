@@ -9,17 +9,16 @@
 
 ## Test and deploy ARM Templates
 ### Test ARM templates before deploying<br>
-    Test-AzureRmResourceGroupDeployment ´
-    -TemplateParameterFile .\keyvault.deploy.parameters.json ´
-    -TemplateFile .\keyvault.deploy.json ´
+    Test-AzureRmResourceGroupDeployment `
+    -TemplateParameterFile .\keyvault.deploy.parameters.json `
+    -TemplateFile .\keyvault.deploy.json `
     -ResourceGroupName „AzWorkshop“
 
 ### Apply ARM template to resource group<br>
-
-    New-AzureRmResourceGroupDeployment
-    -TemplateParameterFile .\keyvault.deploy.parameters.json
-    -TemplateFile .\keyvault.deploy.json
-    -ResourceGroupName „AzWorkshop“
+    New-AzureRmResourceGroupDeployment `
+    -TemplateParameterFile .\keyvault.deploy.parameters.json `
+    -TemplateFile .\keyvault.deploy.json `
+    -ResourceGroupName „AzWorkshop“ `
     –DeploymentName „InitialDeployment“
 
 ## Appendix: Local PowerShell configuration
