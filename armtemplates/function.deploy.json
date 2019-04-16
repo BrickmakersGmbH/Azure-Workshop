@@ -25,7 +25,7 @@
       },
       "runtime": {
         "type": "string",
-        "defaultValue": "node",
+        "defaultValue": "dotnet",
         "allowedValues": ["node", "dotnet", "java"],
         "metadata": {
           "description": "The language worker runtime to load in the function app."
