@@ -97,17 +97,12 @@ const theme = createTheme({
 // https://hackernoon.com/presentations-with-spectacle-how-i-modularize-my-deck-775c082cef08
 export default class Presentation extends React.Component {
   render() {
-
-    let introductionMd = [
-      { md: [workshopMd], title: "Überblick", index: "1.1" }
-    ]
-
     let azureServicesBasicMd = [
       { md: [], title: "Überblick", index: "2.1" },
       { md: [def2], title: "Web App", logo: appServiceLogo, index: "2.2" },
       { md: [def3, def4], title: "App Service Plan", logo: appServicePlanLogo, index: "2.3" },
       { md: [azureRessourceGroup], title: "Ressource Group", logo: azureRessourceGroupLogo, index: "2.4" },
-      { md: [exercise2, exercise2Solution], title: "Übung 2", notes: exercise2Solution },
+      { md: [exercise2, exercise2Solution], title: "Übung 1", notes: exercise2Solution },
 
       {
         md: [
@@ -125,14 +120,11 @@ export default class Presentation extends React.Component {
       },
       { md: [azureBlob], title: "Blob Storage", logo: blobStorageLogo, index: "2.7" },
       {
-        md: [
-          def5,
-          def5zd
-        ],
+        md: [def5],
         logo: deploymentEnvImage,
         title: "Deployment",
         index: "2.8"
-      },
+      }
     ];
 
     let azureServicesExtendedMd = [
@@ -158,14 +150,14 @@ export default class Presentation extends React.Component {
         ]
       },
       {
-        md: [azureAI,], title: "Cognitive Services"
+        md: [azureAI], title: "Cognitive Services"
       },
     ]
 
     const chapters = [
       {
         title: "Einführung", subslides: [
-          { title: "Über mich" },
+          { title: "Über UNS" },
           { title: "BRICKMAKERS GmbH" },
           { title: "Was ist Azure?" },
         ]
@@ -178,18 +170,6 @@ export default class Presentation extends React.Component {
 
     return (
       <Deck transition={["slide", "fade"]} transitionDuration={500} theme={theme} progress="number">
-{/* TODO: ADD MORE INTRO SLIDES FOR GENERAL OVERVIEW OF THE DAY !!! */}
-    <Slide align="center flex-start" bgColor="primary" maxWidth={"100%"} >
-                <Heading size={5} caps lineHeight={1} textColor="secondary">
-                  1. {chapters[0].title}
-                </Heading>
-                <Heading margin="10" size={6} lineHeight={1} textColor="tertiary">
-                  {introductionMd[0].index} {introductionMd[0].title}
-                </Heading>
-            
-                <Markdown margin="20" textColor="tertiary" source={introductionMd[0].md[0]} style={{ "text-align": "left" }} />
-              </Slide>
-
         <Slide bgColor="primary" bgImage={background} >
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
               {Constants.Start.Title}

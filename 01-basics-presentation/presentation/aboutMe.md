@@ -1,15 +1,12 @@
 
-- Jonas Österle
-- B. Eng. Elektrotechnik, HS Koblenz
 
 
-- seit 2016 bei BRICKMAKERS
-- Mitglied im Team Mobile
+- Jonas Österle:
+  - seit 2016 bei BRICKMAKERS
+  - Mitglied im Team Mobile
+  - Full Stack Entwicklung
 
-
-- Tätigkeiten: 
-    - Full-Stack Developer
-    - Azure Verwaltung
-    - Weiterbildung
-    - Mentoring
-    - *Hochschule*
+- Stefan Griebel:
+  - seit 2014 bei BRICKMAKERS
+  - Mitgleid im Team Web
+  - Full Stack Entwicklung
