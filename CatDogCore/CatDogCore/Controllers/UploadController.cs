@@ -3,11 +3,13 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using CatDogCore.Models;
 using CatDogCore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatDogCore.Controllers
 {
+    [Authorize]
     public class UploadController : Controller
     {
         private readonly IBlobstorageService _blobStorageService;

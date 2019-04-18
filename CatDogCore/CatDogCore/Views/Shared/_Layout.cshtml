@@ -34,6 +34,19 @@
                 <li><a asp-area="" asp-controller="Home" asp-action="Cats">Cats</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="Dogs">Dogs</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="Other">Other</a></li>
+                
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-area="" asp-controller="Account" asp-action="SignOut">Logout</a>
+                    }
+                    else
+                    {
+                        <a asp-area="" asp-controller="Account" asp-action="SignIn" asp-route-redirectUrl="/">Login</a>
+                    }
+                </li>
             </ul>
         </div>
     </div>

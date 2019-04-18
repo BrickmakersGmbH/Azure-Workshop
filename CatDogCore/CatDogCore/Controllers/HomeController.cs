@@ -1,10 +1,12 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using CatDogCore.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using CatDogCore.Models;
 using CatDogCore.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace CatDogCore.Controllers
 {
